@@ -35,20 +35,9 @@ cd plexamp-headless
 
 ![](files/plex-claim.png)
 
-## Running
-
-* In a broswer you should be able to hit it directly, if it's running on the same host you could hit it at [localhost:32500/](localhost:32500/), otherwise target the IP that Plexamp Headless is running on, and add that port. Example: [129.168.1.50:32500](192.168.1.50]
-
-![](files/plexamp-leeway.png)
-
-* On a deskop, phone, or tablet running Plexamp, you should be able to see it under 'Players', click on the 'Cast' looking icon on the top right, and it'll give you a list of poential players. Click on the one you're running and you should now have remote control over that instance
-
-![](files/plexamp-players.png)
-
-
 ## Acknowledgements
 
-* [zonywhoop/ansible-role-plexamp-headless](https://github.com/zonywhoop/ansible-role-plexamp-headless/tree/main) - this helped me get started, it has the basis for much of what I've done, but I've rewritten/moderized it and added some useful items
+* [zonywhoop/ansible-role-plexamp-headless](https://github.com/zonywhoop/ansible-role-plexamp-headless/tree/main)
 
 ## License
 
