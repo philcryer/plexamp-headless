@@ -77,14 +77,16 @@ root@hostname:~# systemctl start plexamp-headless.service
 
 ![](files/readme/plexamp-players.png)
 
-* Sometimes on the first run the player will refuse to play any music, if this happens go to Settings (the cog icon on the bottom right) -> Audio Output -> Audio Device and look over your options. On my test system I had a USB speaker that wasn't the default so I just had to choose `USB2.0 Device: USB Audio` to get the game going, so just choose one you think is right, click the Home button, try to play something and rinse and repeat.
+## Troubleshooting
+
+* Sometimes on the first run the player will refuse to play any music, if this happens go to Settings (the cog icon on the bottom right) -> Audio Output -> Audio Device and look over your options. On my test system I had a USB speaker that wasn't the default so I just had to choose `USB2.0 Device: USB Audio` to get the game going, so just choose one you think is right, click the Home button, try to play something; rinse and repeat until you find success.
 
 ## Acknowledgements
 
 Standing on the shoudlers of giants.
 
 * [zonywhoop/ansible-role-plexamp-headless](https://github.com/zonywhoop/ansible-role-plexamp-headless/tree/main) - the bootstrap for this project, it has the basis for much of what I've done, but I've rewritten/moderized it and added some features that I want to expand on that aims to bring this up hosts other than a Raspberry Pi, and ultimately, on non-Debian based systems, while looking for tweaks to improve audio quality as we go
-* [Oefenwe/ansible-nodejs](https://github.com/Oefenweb/ansible-nodejs/tree/master) - updated instructions on using the new methods from [Nodesource](https://deb.nodesource.com/) to install nodejs, the old Ansible module `apt_key` has been deprecated, so there are newer, better ways to install nodejs
+* [Oefenwe/ansible-nodejs](https://github.com/Oefenweb/ansible-nodejs/tree/master) - updated instructions on using the new methods from [Nodesource](https://deb.nodesource.com/) to install nodejs, the old Ansible module `apt_key` has been deprecated, so there are newer, better ways to install nodejs and this project got me there
 
 ## License
 
