@@ -1,9 +1,16 @@
 ---
-- name: Create dependant group if it doesn't exist
+- name: Create dependant groups if they don't exist 
+  # FIXME does this matter if it's not a rasp pi?
   ansible.builtin.group:
-    name: render
+    name: "{{ item }}"
+    state: present
+  loop:
+    - video
+    - audio
+    - render
 
 - name: Create plexamp user and home directory
+  # FIXME same here, does the user need these groups?
   ansible.builtin.user:
     name: "{{ plexamp_user }}"
     shell: /bin/bash
