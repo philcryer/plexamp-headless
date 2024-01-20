@@ -67,6 +67,7 @@ Since we setup this as a systemd service, and it will come up on every boot, you
 ```
 exit
 root@hostname:~# systemctl start plexamp-headless.service
+```
 
 * Now in a broswer you should be able to hit it directly, if it's running on the same host you could hit it at [http://localhost:32500/](http://localhost:32500/), otherwise target the IP that Plexamp Headless is running on, and add that port. For example, if you have a 192.168.1.0 subnet the IP could be: [http://192.168.1.50:32500](http://192.168.1.50], you can look that up on your router, then you'll be prompted to login with your Plex account, login with that then you'll get to the plexamp's UI and you'll see all the music you can see in your normal Plex Media Server.
 
@@ -86,5 +87,7 @@ Standing on the shoudlers of giants.
 * [Oefenwe/ansible-nodejs](https://github.com/Oefenweb/ansible-nodejs/tree/master) - updated instructions on using the new methods from [Nodesource](https://deb.nodesource.com/) to install nodejs, the old Ansible module `apt_key` has been deprecated, so there are newer, better ways to install nodejs
 
 ## License
+
+[MIT License](LICENSE)
 
 Thanks
