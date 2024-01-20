@@ -1,0 +1,72 @@
+---
+- name: Ensure dependant packages are installed
+  ansible.builtin.package:
+    name:
+      - jq
+      - curl
+      - sudo
+      - gnupg
+    state: latest
+
+- name: Get the Nodesource apt key and setup apt repo (Debian)
+  block:
+    - name: Check for gpg key for Nodesource nodejs
+      ansible.builtin.stat:
+        path: /etc/apt/keyrings/nodesource.gpg
+      register: gpg_key
+
+    - name: Get Nodesource apt key and install it, if it doesn't exist
+      ansible.builtin.shell: |
+        curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+      when: not gpg_key.stat.exists
+
+    - name: Setup Nodesource apt repo
+      ansible.builtin.apt_repository:
+        repo: "deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_{{ nodejs_version }} nodistro main"
+        filename: nodesource
+        state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Install Node Version Manager (nvm) for user
+  ansible.builtin.shell: |
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+- name: Install node.js from Nodesource apt repo
+  ansible.builtin.apt:
+    name: nodejs
+    state: latest
+
+- stat:
+    path: "/home/{{ plexamp_user }}/.nvm"
+  register: nvm_path
+
+- name: Install Node Version Manager (nvm) and setup user's .profile
+  become: yes
+  become_flags: -i 
+  become_user: "{{ plexamp_user }}"
+  block:
+    - name: Install nvm
+      shell: >
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
+      args:
+        executable: /bin/bash
+        chdir: "$HOME"
+        creates: "$HOME/.nvm/nvm.sh"
+
+    - name: Setup user's .profile 
+      lineinfile:
+        path: ~/.profile
+        line: source ~/.nvm/nvm.sh 
+        create: yes
+      become_flags: -i  
+  when: nvm_path.stat.exists  == false 
+
+- name: Installing reqested node version(s) using loop
+  #command: sudo -iu {{ plexamp_user }} nvm install {{item}}
+  shell: sudo -iu {{ plexamp_user }} nvm install {{item}}
+  args:
+    executable: /bin/bash
+    chdir: "$HOME"
+    creates: "$HOME/.nvm/versions/node/v{{item}}"
+  loop:
+    - 16.20.2

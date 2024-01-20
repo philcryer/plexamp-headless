@@ -1,0 +1,10 @@
+---
+- name: Download, install and configure Plexamp Headless 
+  hosts: localhost
+  become: true
+  tasks:
+   - name: Define Plexamp Headless variables 
+     ansible.builtin.include_vars: vars/main.yml
+
+   - name: Run tasks
+     ansible.builtin.include_tasks: tasks/main.yml

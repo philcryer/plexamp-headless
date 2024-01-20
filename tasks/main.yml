@@ -1,0 +1,9 @@
+---
+- name: Create plexamp user
+  import_tasks: 01_setup_user.yml
+
+- name: Install dependant software
+  import_tasks: 02_install_dep_software.yml
+
+- name: Download and install Plexamp Headless
+  import_tasks: 03_install_plexamp.yml

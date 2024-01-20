@@ -1,0 +1,21 @@
+---
+- name: Create dependant group if it doesn't exist
+  ansible.builtin.group:
+    name: render
+
+- name: Create plexamp user and home directory
+  ansible.builtin.user:
+    name: "{{ plexamp_user }}"
+    shell: /bin/bash
+    groups:
+      - video
+      - audio
+      - render
+    uid: "{{ plexamp_uid }}"
+
+- name: Create directory for Plexamp Headless
+  ansible.builtin.file:
+    dest: "/home/{{plexamp_user}}/plexamp"
+    owner: "{{ plexamp_user }}"
+    group: "{{ plexamp_group }}"
+    state: directory 

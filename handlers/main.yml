@@ -1,0 +1,9 @@
+---
+- name: Restart Plexamp Headless
+  ansible.builtin.service:
+    name: plexamp-headless
+    state: restarted
+
+- name: Call daemon-reload after systemd service file change
+  ansible.builtin.systemd_service:
+    daemon_reload: true

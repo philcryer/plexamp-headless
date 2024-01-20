@@ -1,0 +1,10 @@
+---
+nodejs_version: 16.x
+plexamp_uid: 1001
+plexamp_user: plexamp
+plexamp_group: plexamp
+#plexamp_archive: https://plexamp.plex.tv/headless
+plexamp_url: https://plexamp.plex.tv/headless
+#plexamp_filename: "Plexamp-Linux-headless-v{{ plexamp_version }}.tar.bz2"
+#plexamp_url: "{{ plexamp_archive }}/{{ plexamp_filename }}"
+#plexamp_url: "{{ plexamp_archive }}/{{ plexamp_filename }}"

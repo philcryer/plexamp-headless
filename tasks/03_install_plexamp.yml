@@ -1,0 +1,34 @@
+---
+- name: Get the latest Plexamp Headless version
+  ansible.builtin.shell: 
+    cmd: |
+      curl -s "https://plexamp.plex.tv/headless/version.json" | jq -r '.latestVersion'
+  register: plexamp_version
+
+- name: Download Plexamp Headless, install to plexamp user's home directory
+  ansible.builtin.unarchive:
+    src: "{{ plexamp_url }}/Plexamp-Linux-headless-v{{ plexamp_version.stdout }}.tar.bz2"
+    dest: "/home/{{ plexamp_user }}"
+    owner: "{{ plexamp_user }}"
+    group: "{{ plexamp_group }}"
+    remote_src: true
+
+- name: Create Plexamp Headless service
+  ansible.builtin.copy:
+    src: plexamp-headless.service
+    dest: /etc/systemd/system
+    owner: root
+    group: root
+
+- name: Enable Plexamp Headless service to start on boot
+  ansible.builtin.systemd:
+    name: plexamp-headless.service
+    state: stopped
+    enabled: true
+
+- name: Force a systemd to reread configs
+  systemd:
+    daemon_reload: true
+
+#- name: Enable Plexamp Headless service to start on boot and reload systemd
+#  ansible.builtin.command: systemctl enable plexamp\x2dheadless.service; systemctl daemon-reload 
