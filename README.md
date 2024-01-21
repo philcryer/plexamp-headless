@@ -86,7 +86,9 @@ root@hostname:~# systemctl start plexamp-headless.service
 Standing on the shoudlers of giants.
 
 * [zonywhoop/ansible-role-plexamp-headless](https://github.com/zonywhoop/ansible-role-plexamp-headless/tree/main) - the bootstrap for this project, it has the basis for much of what I've done, but I've rewritten/moderized it and added some features that I want to expand on that aims to bring this up hosts other than a Raspberry Pi, and ultimately, on non-Debian based systems, while looking for tweaks to improve audio quality as we go
+* [Install Headless Plexamp for your Raspberry Pi to create a Plex endpoint](https://howtohifi.com/install-headless-plexamp-endpoint-home-network-raspberry-pi/) - a great, detailed post that showed all the steps and some gotchas with workarounds. This is the kind of HOWTO I try to write when I'm sharing things on my blog. Excellent work.
 * [Oefenwe/ansible-nodejs](https://github.com/Oefenweb/ansible-nodejs/tree/master) - updated instructions on using the new methods from [Nodesource](https://deb.nodesource.com/) to install nodejs, the old Ansible module `apt_key` has been deprecated, so there are newer, better ways to install nodejs and this project got me there
+* [Plexamp](https://www.plex.tv/plexamp/) - I really like Plex, so much so that I bought a lifetime 'Plex Pass', and I use it daily on my Debian Linux server for movies and shows. Music too, of course, but the lack of gapless playback has ALWAYS been a thorn in my side. I really love so many of the decisions they've made with Plexamp, and I hope my project helps others adopt and run a truly great headless audio endpoint. I'm very interested in learning more about kernel parameters and other tweaks to make Linux audio as good as it can be. 
 
 ## License
 

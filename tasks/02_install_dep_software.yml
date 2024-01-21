@@ -27,10 +27,6 @@
         state: present
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Install Node Version Manager (nvm) for user
-  ansible.builtin.shell: |
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-
 - name: Install node.js from Nodesource apt repo
   ansible.builtin.apt:
     name: nodejs
@@ -39,6 +35,10 @@
 - stat:
     path: "/home/{{ plexamp_user }}/.nvm"
   register: nvm_path
+
+#- name: Install Node Version Manager (nvm) for user
+#  ansible.builtin.shell: |
+#    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
 - name: Install Node Version Manager (nvm) and setup user's .profile
   become: yes
@@ -61,9 +61,8 @@
       become_flags: -i  
   when: nvm_path.stat.exists  == false 
 
-- name: Installing reqested node version(s) using loop
-  #command: sudo -iu {{ plexamp_user }} nvm install {{item}}
-  shell: sudo -iu {{ plexamp_user }} nvm install {{item}}
+- name: Installing reqested nodejs version(s) via nvm
+  shell: sudo -iu {{ plexamp_user }} nvm install {{ item }}
   args:
     executable: /bin/bash
     chdir: "$HOME"

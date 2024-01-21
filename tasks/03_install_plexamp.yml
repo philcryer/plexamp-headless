@@ -1,13 +1,25 @@
 ---
-- name: Get the latest Plexamp Headless version
+- name: Determine the latest Plexamp Headless version
   ansible.builtin.shell: 
     cmd: |
       curl -s "https://plexamp.plex.tv/headless/version.json" | jq -r '.latestVersion'
-  register: plexamp_version
+  register: plexamp_latest_version
+
+- name: Get the latest Plexamp Headless download link
+  ansible.builtin.shell: 
+    cmd: |
+      curl -s "https://plexamp.plex.tv/headless/version$1.json" | jq -r '.updateUrl'
+  register: plexamp_download_link
+
+- name: Summarize Plexamp Headless download'
+  debug:
+    msg: 
+    - "Latest Plexamp Headless version: {{ plexamp_latest_version }}"
+    - "Download Plexamp archive: {{ plexamp_download_link }}"
 
 - name: Download Plexamp Headless, install to plexamp user's home directory
   ansible.builtin.unarchive:
-    src: "{{ plexamp_url }}/Plexamp-Linux-headless-v{{ plexamp_version.stdout }}.tar.bz2"
+    src: "{{ plexamp_download_link }}"
     dest: "/home/{{ plexamp_user }}"
     owner: "{{ plexamp_user }}"
     group: "{{ plexamp_group }}"
@@ -32,3 +44,29 @@
 
 #- name: Enable Plexamp Headless service to start on boot and reload systemd
 #  ansible.builtin.command: systemctl enable plexamp\x2dheadless.service; systemctl daemon-reload 
+
+- name: Find soundcards on the system
+  ansible.builtin.shell: 'cat /proc/asound/cards'
+  register: soundcards_found
+
+- name: Display soundcards found on the system
+  debug:
+    var: soundcards_found.stdout_lines
+
+- name: Install complete, provide next steps to configure Plexamp headless
+  debug:
+    msg:
+    - "Become plexamp user and run plexamp:" 
+    - "sudo su -"
+    - "su - plexamp"
+    - "node plexamp/js/index.js"
+    - "In a browser, visit https://plex.tv/claim"
+    - "Copy/paste that claim code in the terminal"
+    - "Enter a name for your Plexamp Headless server (this will be seen in the Plexamp Clients)"
+    - "Exit the dialog and run Plexamp Headless as root"
+    - "exit"
+    - "systemctl start plexamp-headless.service"
+    - "In a Plexamp Client, connect to your new Plexamp Headless instance"
+    - "Play some music, if you don't hear anything go to Settings > Playback > Audio Output > Audio Device"
+    - "Select an option from the list, go back, try to play music. Repeat until you have success"
+    - "Enjoy the music!"
