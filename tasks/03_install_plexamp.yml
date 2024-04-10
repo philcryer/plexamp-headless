@@ -12,10 +12,15 @@
   register: plexamp_download_link
 
 - name: Summarize Plexamp Headless download'
-  debug:
+  ansible.builtin.debug:
     msg: 
     - "Latest Plexamp Headless version: {{ plexamp_latest_version }}"
     - "Download Plexamp archive: {{ plexamp_download_link }}"
+
+#- name: Print return information from the previous task
+#  ansible.builtin.debug:
+#    var: plexamp_download_link
+#    verbosity: 2
 
 - name: Download Plexamp Headless, install to plexamp user's home directory
   ansible.builtin.unarchive:

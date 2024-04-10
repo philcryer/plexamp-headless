@@ -1,4 +1,24 @@
 ---
+#- name: Create Plexamp Headless service
+#  ansible.builtin.copy:
+#    src: plexamp-headless.service
+#    dest: /etc/systemd/system
+#    owner: root
+#    group: root
+
+- name: Populate service facts to see if plexamp-headless is installed
+  service_facts:
+- debug:
+    msg: Plexamp-headless is installed
+  when: "'plexamp-headless.service' in services"
+
+
+- name: If Plexamp Headless service is installed, stop it
+  ansible.builtin.systemd:
+    name: plexamp-headless.service
+    state: stopped
+  when: "'plexamp-headless.service' in services"
+
 - name: Create dependant groups if they don't exist 
   # FIXME does this matter if it's not a rasp pi?
   ansible.builtin.group:
