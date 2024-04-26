@@ -20,6 +20,21 @@ NOTE: This Ansible code has been developed on [Debian](https://www.debian.org/),
 (sudo) apt install ansible git
 ```
 
+* Install openssh-server and start it if you don't have it installed
+
+```
+(sudo) apt install openssh-server
+(sudo) service ssh start
+```
+
+* Verify that you can connect to the localhost
+
+```
+ssh localhost
+```
+
+If this fails you don't have an ssh key installed yet, [generate a new ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and try again to ssh to localhost
+
 * Checkout this Ansible code
 
 ```
